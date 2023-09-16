@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+  
+.dark-theme{
+    background-color: black;
+    color: white;
+}
+
+.light-theme{
+    background-color: #FFC96C;
+    color: black;
+}
+
+
+.f-jost{
+    font-family: Jost
+}
