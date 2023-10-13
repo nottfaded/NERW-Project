@@ -5,9 +5,9 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
     template: `
     <header></header>
     <div class="contacts-page f-jost" [ngClass]="classTheme">
-        CONTACTS
+        CONTACTS {{classTheme}}
     </div>`,
-    styleUrls:['../../styles.scss']
+    styleUrls:[]
 })
 
 export class ContactsComponent { 

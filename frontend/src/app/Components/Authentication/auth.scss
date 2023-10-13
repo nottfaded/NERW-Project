@@ -1,0 +1,387 @@
+@import 'src/variables.scss';
+$circle-size: 1100px;
+$circle-size-vh: get-vh($circle-size);
+
+.auth {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .main{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .main-left{
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .main-circle{
+        position: absolute;
+        border-radius: 50%;
+        width: $circle-size-vh;
+        height: $circle-size-vh;
+
+        &.small{
+          transform: scale(1);
+          background-color: #FFDC9F;
+          left: get-vh(-(calc($circle-size / 2)) + 58);
+          z-index: 3;
+        }
+        &.medium{
+          transform: scale(1.25);
+          background-color: #FFE9B2;
+          left: get-vh(-(calc($circle-size / 2)) + 58);
+          z-index: 2;
+        }
+        &.big{
+          transform: scale(1.51);
+          background-color: #FFF1CC;
+          left: get-vh(-(calc($circle-size / 2)) + 58);
+          z-index: 1;
+        }
+      }
+
+      .main-circle-icon{
+        width: get-vh(911px);
+        height: get-vh(417px);
+        align-self: flex-end;
+        position: relative;
+        bottom: 0;
+        z-index: 4;
+        margin-left: get-vh(84px);
+      }
+    }
+
+    .main-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+
+      .main-right-container {
+        position: absolute;
+        width: get-vh(460px);
+        height: get-vh(560px);
+        
+        .main-right-title {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          
+          .main-right-title-item {
+            &:nth-child(1) {
+              text-align: center;
+              position: relative;
+              width: get-vh(288px);
+              height: get-vh(55px);
+              font-family: Montserrat;
+              font-weight: 700;
+              transition: color 0.25 ease-in-out;
+              color: #111;
+              font-size: get-vh(48px);
+            }
+          }
+        }
+
+        .main-right-container-inputs{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-direction: column;
+          margin-top: get-vh(60px);
+          gap: get-vh(15px);
+
+          
+
+          input{
+            width: get-vh(225px);
+            height: get-vh(50px);
+            border: get-vh(1px) solid #949494;
+            background: #FFF;
+            box-shadow: 0px get-vh(4px) get-vh(4px) get-vh(0px) rgba(0, 0, 0, 0.25);
+            border-radius: get-vh(5px);
+            padding-left: get-vh(20px);
+            
+            color: #111;
+            font-size: get-vh(14px);
+            font-weight: 400;
+            font-family: Montserrat;
+            transition: border 0.25s ease;
+            &:focus{
+              border: get-vh(1px) solid #467AFF;
+              &::placeholder{
+                color: #467AFF;
+              }
+            }
+          }
+          .is-error-input:focus{
+            border: get-vh(1px) solid #FF5252;
+            &::placeholder{
+              color: #FF5252;
+            }
+          }
+
+          .main-right-container-name{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            & > input{
+              width: get-vh(225px);
+              
+            }
+          }
+          .main-right-container-email {
+            width: 100%;
+            height: get-vh(50px);
+            position: relative;
+            display: flex;
+            align-items: center;
+            & > input{
+              width: 100%;
+            }
+          }
+          .main-right-container-password {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & > input{
+              width: 100%;
+            }
+            & > .eye-pass{
+              opacity: 0.5;
+              cursor: pointer;
+              width: get-vh(30px);
+              height: get-vh(25px);
+              position: absolute;
+              right: get-vh(16px);
+            }
+          }
+
+          
+        }
+
+        .main-right-container-birthday{
+          margin-top: get-vh(20px);
+          & > .birthday-header{
+            display: flex;
+            justify-content: space-between;
+            color: #111;
+            font-family: Montserrat;
+            font-size: get-vh(12px);
+            font-weight: 500;
+            padding-bottom: get-vh(9px);
+          }
+
+          & > .birthday-inputs{
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            & > .item-list-date{
+              width: get-vh(143px);
+              position: relative;
+              & > .item-list{
+                border: get-vh(1px) solid #949494;
+                border-radius: get-vh(5px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: get-vh(36px);
+                font-family: Montserrat;
+                font-size: get-vh(16px);
+                font-weight: 600;
+                box-shadow: 0px get-vh(4px) get-vh(4px) 0px rgba(0, 0, 0, 0.25);
+
+                & > img{
+                  right: get-vh(4px);
+                  position: absolute;
+                  width: get-vh(18px);
+                  height: get-vh(18px);
+                }
+              }
+              & > .list-of-date{
+                position: absolute;
+                background-color: #fff;
+                border: get-vh(1px) solid #949494;
+                border-radius: get-vh(5px);
+                opacity: 0;
+                width: get-vh(143px);
+                height: get-vh(36px);
+                overflow: hidden;
+                transition: height 0.5s ease;
+                &::-webkit-scrollbar{
+                  width: 0px;
+                }
+                &.active{
+                  opacity: 1;
+                  overflow-y: scroll;
+                  height: get-vh(175px);
+                }
+                & > .item-list{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 100%;
+                  height: get-vh(36px);
+                  font-family: Montserrat;
+                  font-size: get-vh(16px);
+                  font-weight: 600;
+                }
+              }
+            }
+
+          }
+
+          & > .birthday-footer{
+            color: #111;
+            font-family: Montserrat;
+            font-size: get-vh(11px);
+            font-weight: 300;
+            padding-top: get-vh(9px);
+          }
+        }
+
+        .btns-footer-reg{
+          padding-top: get-vh(44px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          & > button{
+            width: get-vh(459px);
+            height: get-vh(55px);
+            border-radius: get-vh(2px);
+            background: #C6C6C6;
+            color: #949494;
+            background: #321600;
+            color: #FFF;
+            font-family: Montserrat;
+            font-size: get-vh(20px);
+            font-weight: 600;
+          }
+          & > a{
+            cursor: pointer;
+            padding-top: get-vh(12px);
+            color: #1B1B1B;
+            font-family: Montserrat;
+            font-size: get-vh(15px);
+            font-weight: 400;
+            &:hover{
+              text-decoration-line: underline;
+            }
+          }
+          & > .not-inputs-data{
+            background: #C6C6C6;
+            color: #949494;
+          }
+        }
+
+        .main-right-container-error-message{
+          display: flex;
+          justify-content: space-between;
+          padding-top: get-vh(6px);
+          font-size: get-vh(13px);
+          & > .error-message-login{
+            color: #FF3636;
+            font-family: Montserrat;
+            font-weight: 500;
+            align-self: flex-start; 
+          }
+          & > a{
+            cursor: pointer;
+            color: #1B1B1B;
+            font-family: Montserrat;
+            font-weight: 400;
+            &:hover{
+              text-decoration-line: underline;
+            }
+          }
+        }
+
+        .btns-footer-auth{
+          padding-top: get-vh(44px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          & > button{
+            width: get-vh(459px);
+            height: get-vh(55px);
+            border-radius: get-vh(2px);
+            background: #321600;
+            color: #FFF;
+            font-family: Montserrat;
+            font-size: get-vh(20px);
+            font-weight: 600;
+          }
+          & > .not-inputs-data{
+            background: #C6C6C6;
+            color: #949494;
+          }
+          & > .create-new-acc-btn{
+            margin-top: get-vh(114px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: get-vh(6px);
+            & > span{
+              color: #111;
+              font-family: Montserrat;
+              font-size: get-vh(12px);
+              font-weight: 400;
+            }
+            & > button{
+              width: get-vh(320px);
+              height: get-vh(50px);
+              background-color: #FFE29D;
+              color: #111;
+              font-family: Montserrat;
+              font-size: get-vh(16px);
+              font-weight: 300;
+            }
+          }
+        }
+      }
+
+      .error-message {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: get-vh(185px);
+        min-height: get-vh(44px);
+        border-radius: get-vh(5px);
+        background: #DDDDDD;
+        box-shadow: 0px get-vh(4px) get-vh(4px) 0px rgba(0, 0, 0, 0.25);
+        left: get-vh(-195px);
+        z-index: 1;
+        color: #111111;
+        font-family: Montserrat;
+        font-size: get-vh(12px);
+        font-weight: 300;
+        &::after{
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-top: get-vh(5px) solid white;
+          border-right: get-vh(10px) solid #DDDDDD;
+          border-bottom: get-vh(5px) solid white;
+          right: get-vh(-10px);
+          bottom: 50%;
+          transform: scale(-1, 1);
+        }
+        & > span{
+          padding: get-vh(5px);
+        }
+      }
+      
+    }
+  }
+}

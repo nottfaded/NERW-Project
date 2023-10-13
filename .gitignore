@@ -38,3 +38,8 @@ frontend/typings
 # System files
 .DS_Store
 Thumbs.db
+
+#Asp.net
+.vs
+backend/bin
+backend/obj
