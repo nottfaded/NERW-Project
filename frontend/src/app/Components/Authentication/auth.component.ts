@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
-import { ThemeService } from "../../InjectableServices/theme.service";
+import { ThemeService } from "../../injectable-services/theme.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from "../../../main";
-import { AccountData } from "../../InjectableServices/account.service";
+import { AccountData } from "../../injectable-services/account.service";
 
 @Component({
   selector: "auth-page",
   template: `
-    <div class="auth f-jost" (click)="dateActiveItem = 0">
+    <div class="auth" (click)="dateActiveItem = 0">
       <div class="header">
           
       </div>
@@ -19,12 +19,12 @@ import { AccountData } from "../../InjectableServices/account.service";
           <div class="main-circle small"></div>
           <div class="main-circle medium"></div>
           <div class="main-circle big"></div>
-          <img src="/assets/img/Authentication/auth-reg-girl.png" alt="girl" class="main-circle-icon">
+          <img src="/assets/img/authentication/auth-reg-girl.png" alt="girl" class="main-circle-icon">
         </div>
 
         <div class="main-right">
           <div class="main-right-container">
-            <div *ngIf="isReg; else auth">
+            <ng-container *ngIf="isReg; else auth">
               <div class="main-right-title" >
                 <div class="main-right-title-item">
                   Реєстрація
@@ -47,7 +47,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                   <div class="error-message" *ngIf="!newPasswordIsValid()"><span>Пароль повинен складатися мінімум з 6 символів.</span></div>
                   <input [type]="passIsUnlock ? 'text' : 'password'" placeholder="Новий пароль" 
                     [ngClass]="{'is-error-input': !newPasswordIsValid()}" (input)="newPassword.isInput = true" [(ngModel)]="newPassword.password" >
-                  <img (click)="changePassLock()" class="eye-pass" [src]="passIsUnlock ? '/assets/img/Authentication/eye-pass-unlock.svg' : '/assets/img/Authentication/eye-pass-lock.svg'" alt="eye-pass">
+                  <img (click)="changePassLock()" class="eye-pass" [src]="passIsUnlock ? '/assets/img/authentication/eye-pass-unlock.svg' : '/assets/img/authentication/eye-pass-lock.svg'" alt="eye-pass">
                 </div>
               </div>
 
@@ -62,7 +62,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                   <div class="item-list-date">
                     <div class="item-list" (click)="$event.stopPropagation(); setDateActiveItem(1)">
                       {{activeDay}}
-                      <img src="/assets/img/Authentication/white-arrow-icon.svg" alt="arrow">
+                      <img src="/assets/img/authentication/white-arrow-icon.svg" alt="arrow">
                     </div>
                     <ul class="list-of-date" [ngClass]="{'active': dateActiveItem === 1}" >
                       <li class="item-list" *ngFor="let day of days" (click)="setActiveDay(day)">{{day}}</li>
@@ -71,7 +71,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                   <div class="item-list-date">
                     <div class="item-list" (click)="$event.stopPropagation(); setDateActiveItem(2)">
                       {{month[activeMonth]}}
-                      <img src="/assets/img/Authentication/white-arrow-icon.svg" alt="arrow">
+                      <img src="/assets/img/authentication/white-arrow-icon.svg" alt="arrow">
                     </div>
                     <ul class="list-of-date" [ngClass]="{'active': dateActiveItem === 2}">
                       <li class="item-list" *ngFor="let item of month | keyvalue" (click)="setActiveMonth(+item.key)">{{item.value}}</li>
@@ -80,7 +80,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                   <div class="item-list-date">
                     <div class="item-list" (click)="$event.stopPropagation(); setDateActiveItem(3)">
                       {{activeYear}}
-                      <img src="/assets/img/Authentication/white-arrow-icon.svg" alt="arrow">
+                      <img src="/assets/img/authentication/white-arrow-icon.svg" alt="arrow">
                     </div>
                     <ul class="list-of-date" [ngClass]="{'active': dateActiveItem === 3}">
                       <li class="item-list" *ngFor="let year of years" (click)="setActiveYear(year)">{{year}}</li>
@@ -100,7 +100,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                 </button>
                 <a (click)="navigateToAuthReg()">Увійти в існуючий аккаунт</a>
               </div>
-            </div>
+            </ng-container>
             
             <ng-template #auth>
               <div class="main-right-title">
@@ -115,7 +115,7 @@ import { AccountData } from "../../InjectableServices/account.service";
                 </div>
                 <div class="main-right-container-password">
                   <input [type]="passIsUnlock ? 'text' : 'password'" placeholder="Новий пароль" [(ngModel)]="password">
-                  <img (click)="changePassLock()" class="eye-pass" [src]="passIsUnlock ? '/assets/img/Authentication/eye-pass-unlock.svg' : '/assets/img/Authentication/eye-pass-lock.svg'" alt="eye-pass">
+                  <img (click)="changePassLock()" class="eye-pass" [src]="passIsUnlock ? '/assets/img/authentication/eye-pass-unlock.svg' : '/assets/img/authentication/eye-pass-lock.svg'" alt="eye-pass">
                 </div>
               </div>
 
@@ -171,7 +171,8 @@ export class AuthComponent {
   //#endregion
 
   constructor(protected themeService: ThemeService, private route: ActivatedRoute, private router: Router, private http: HttpClient,
-    protected account : AccountData) {
+    protected account : AccountData) 
+  {
     route.queryParams.subscribe((params) => {
       if(!params['type'] || (params['type'] != 'authorization' && params['type'] != 'registration')){
         this.router.navigate(['/auth'], { queryParams: { type: "authorization" } });

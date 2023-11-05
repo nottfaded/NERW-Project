@@ -1,0 +1,66 @@
+@import "src/variables.scss";
+
+.home-page-special-text {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  column-gap: get-vh(60px);
+  color: $black-22;
+  font-size: get-vh(40px);
+  font-weight: 600;
+  margin-bottom: get-vh(75px);
+  position: relative;
+  top: get-vh(-25px);
+
+  & > span {
+    background-color: $white;
+    white-space: nowrap;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    margin: auto;
+    height: get-vh(1px);
+    background-color: #d6d6d6;
+    width: 100%;
+  }
+}
+
+.home-part-conainer {
+  display: flex;
+  padding-left: get-vh(200px);
+  padding-right: get-vh(200px);
+}
+
+.emergency-services-container {
+  display: flex;
+  justify-content: center;
+  column-gap: get-vh(150px);
+  margin-left: get-vh(345px);
+  margin-right: get-vh(345px);
+  margin-bottom: get-vh(130px);
+
+  & > .emergency-services-item {
+    width: get-vh(240px);
+
+    & > .emergency-services-text {
+      color: $gray-high;
+      font-size: get-vh(16px);
+      font-weight: 400;
+    }
+
+    & > .emergency-services-links {
+      margin-top: get-vh(25px);
+      line-height: get-vh(35px);
+      color: #408cff;
+      font-size: get-vh(20px);
+      font-weight: 400;
+      text-decoration-line: underline;
+
+      & > a {
+        color: #408cff;
+      }
+    }
+  }
+}

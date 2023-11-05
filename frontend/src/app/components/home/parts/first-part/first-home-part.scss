@@ -1,0 +1,112 @@
+@import 'src/variables.scss';
+
+.frt-home-part-container{
+    width: get-vh(1800px);
+    height: get-vh(495px);
+    display: flex;
+    justify-content: center;
+    column-gap: get-vh(100px);
+    margin-top: get-vh(140px);
+    margin-left: auto;
+    margin-right: auto;
+
+    .frt-home-part-container-left{
+        width: get-vh(624px);
+
+        .frt-home-part-container-left-text{
+            margin-bottom: get-vh(100px);
+            .frt-home-part-container-left-text-title{
+                margin-top: get-vh(15px);
+                color: $black-11;
+                font-size: get-vh(98px);
+                font-weight: 600;
+                letter-spacing: get-vh(0.98px);
+                margin-bottom: get-vh(30px);
+            }
+            .frt-home-part-container-left-text-body{
+                width: get-vh(624px);
+                color: $black-11;
+                font-size: get-vh(20px);
+                font-weight: 400;
+
+                & > p:nth-child(1){
+                    margin-bottom: get-vh(18px);
+                }
+            }
+        }
+        .frt-home-part-container-left-btns{
+            display: flex;
+            align-items: center;
+            column-gap: get-vh(26px);
+            
+            & > button:nth-child(1){
+                width: get-vh(270px);
+                height: get-vh(55px);
+                flex-shrink: 0;
+                background-color: $brown-low;
+                color: $white;
+                font-size: get-vh(20px);
+                font-weight: 400;
+                border-radius: get-vh(50px);
+                &:hover{
+                    background-color: $white;
+                    color: $black-11;
+                    border: get-vh(1px) solid $black-11;
+                }
+            }
+            & > p{
+                font-size: get-vh(20px);
+            }
+            & > button:nth-child(3){
+                width: get-vh(240px);
+                height: get-vh(55px);
+                color: $black-11;
+                font-size: get-vh(20px);
+                font-weight: 400;
+                border-radius: get-vh(50px);
+                border: get-vh(1px) solid $black-11;
+                &:hover{
+                    background-color: $brown-low;
+                    color: $white;
+                    border: none;
+                }
+            }
+        }
+    }
+
+    .frt-home-part-container-right{
+        width: get-vh(884px);
+        & > img{
+            height: 100%;
+        }
+    }
+}
+
+.frt-home-part-info{
+    margin-top: get-vh(140px);
+    margin-bottom: get-vh(100px);
+    height: get-vh(140px);
+    background-color: #F8FBFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    column-gap: get-vh(120px);
+
+    .frt-home-part-info-item{
+        max-width: get-vh(326px);
+        .frt-home-part-info-item-title{
+            margin-bottom: get-vh(10px);
+            color: $black-11;
+            font-family: Jost;
+            font-size: get-vh(32px);
+            font-weight: 500;
+        }
+        .frt-home-part-info-item-body{
+            color: $gray-high;
+            text-align: center;
+            font-size: get-vh(16px);
+            font-weight: 500;
+        }
+    }
+}

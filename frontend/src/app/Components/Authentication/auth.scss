@@ -81,7 +81,6 @@ $circle-size-vh: get-vh($circle-size);
               position: relative;
               width: get-vh(288px);
               height: get-vh(55px);
-              font-family: Montserrat;
               font-weight: 700;
               transition: color 0.25 ease-in-out;
               color: #111;
@@ -112,7 +111,6 @@ $circle-size-vh: get-vh($circle-size);
             color: #111;
             font-size: get-vh(14px);
             font-weight: 400;
-            font-family: Montserrat;
             transition: border 0.25s ease;
             &:focus{
               border: get-vh(1px) solid #467AFF;
@@ -175,7 +173,6 @@ $circle-size-vh: get-vh($circle-size);
             display: flex;
             justify-content: space-between;
             color: #111;
-            font-family: Montserrat;
             font-size: get-vh(12px);
             font-weight: 500;
             padding-bottom: get-vh(9px);
@@ -196,7 +193,6 @@ $circle-size-vh: get-vh($circle-size);
                 justify-content: center;
                 width: 100%;
                 height: get-vh(36px);
-                font-family: Montserrat;
                 font-size: get-vh(16px);
                 font-weight: 600;
                 box-shadow: 0px get-vh(4px) get-vh(4px) 0px rgba(0, 0, 0, 0.25);
@@ -232,7 +228,6 @@ $circle-size-vh: get-vh($circle-size);
                   justify-content: center;
                   width: 100%;
                   height: get-vh(36px);
-                  font-family: Montserrat;
                   font-size: get-vh(16px);
                   font-weight: 600;
                 }
@@ -243,7 +238,6 @@ $circle-size-vh: get-vh($circle-size);
 
           & > .birthday-footer{
             color: #111;
-            font-family: Montserrat;
             font-size: get-vh(11px);
             font-weight: 300;
             padding-top: get-vh(9px);
@@ -263,15 +257,13 @@ $circle-size-vh: get-vh($circle-size);
             color: #949494;
             background: #321600;
             color: #FFF;
-            font-family: Montserrat;
             font-size: get-vh(20px);
             font-weight: 600;
           }
           & > a{
             cursor: pointer;
             padding-top: get-vh(12px);
-            color: #1B1B1B;
-            font-family: Montserrat;
+            color: #1B1B1B; 
             font-size: get-vh(15px);
             font-weight: 400;
             &:hover{
@@ -291,14 +283,12 @@ $circle-size-vh: get-vh($circle-size);
           font-size: get-vh(13px);
           & > .error-message-login{
             color: #FF3636;
-            font-family: Montserrat;
             font-weight: 500;
             align-self: flex-start; 
           }
           & > a{
             cursor: pointer;
             color: #1B1B1B;
-            font-family: Montserrat;
             font-weight: 400;
             &:hover{
               text-decoration-line: underline;
@@ -317,7 +307,6 @@ $circle-size-vh: get-vh($circle-size);
             border-radius: get-vh(2px);
             background: #321600;
             color: #FFF;
-            font-family: Montserrat;
             font-size: get-vh(20px);
             font-weight: 600;
           }
@@ -333,7 +322,6 @@ $circle-size-vh: get-vh($circle-size);
             gap: get-vh(6px);
             & > span{
               color: #111;
-              font-family: Montserrat;
               font-size: get-vh(12px);
               font-weight: 400;
             }
@@ -342,7 +330,6 @@ $circle-size-vh: get-vh($circle-size);
               height: get-vh(50px);
               background-color: #FFE29D;
               color: #111;
-              font-family: Montserrat;
               font-size: get-vh(16px);
               font-weight: 300;
             }
@@ -362,7 +349,6 @@ $circle-size-vh: get-vh($circle-size);
         left: get-vh(-195px);
         z-index: 1;
         color: #111111;
-        font-family: Montserrat;
         font-size: get-vh(12px);
         font-weight: 300;
         &::after{

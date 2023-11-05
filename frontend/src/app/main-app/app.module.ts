@@ -3,23 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from '../Components/Header/header.component';
-import { HomeComponent } from '../Components/Home/home.component';
-import { ContactsComponent } from '../Components/Contacts/contacts.component';
-import { AuthComponent } from '../Components/Authentication/auth.component';
+import { ContactsComponent } from '../components/contacts/contacts.component';
+import { AuthComponent } from '../components/authentication/auth.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from '../Interceptor/jwt-interceptor';
+import { JwtInterceptor } from '../interceptor/jwt-interceptor';
+import { HomeModule } from '../components/home/home.module';
+import { FooterComponent } from '../components/footer/footer.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent, HomeComponent, ContactsComponent, AuthComponent
+    AppComponent, ContactsComponent, AuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, HttpClientModule
+    FormsModule, HttpClientModule, 
+    HomeModule
   ],
   providers: [
     {

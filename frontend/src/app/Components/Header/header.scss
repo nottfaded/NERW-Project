@@ -1,36 +1,86 @@
+@import 'src/variables.scss';
+
 .header {
-  min-height: 70px;
-  max-height: 70px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 20px;
+  height: get-vh(90px);
 
-  .left {
-    margin-left: 20px;
-    img {
-      height: 40px;
-      width: auto;
-    }
-  }
+  & > .header-main-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    margin-left: get-vh(33px);
+    margin-right: get-vh(33px);
 
-  .right {
-    display: inherit;
-    align-items: inherit;
-    column-gap: 0.9cm;
-    a {
-      margin-right: 15px;
-      color: inherit;
-      text-decoration: none;
+    & > .left {
+      & > .left-company-name{
+        color: #222;
+        font-family: Josefin Sans;
+        font-size: get-vh(48px);
+        font-weight: 700;
+      }
     }
-    svg{
-      margin-right: 20px;
-    }
-
-    // .user-icon {
-      
-    // }
-  }
   
+    & > .right {
+      display: inherit;
+      align-items: inherit;
+      column-gap: get-vh(50px);
+
+      & > a{
+        position: relative;
+        color: #222;
+        font-family: Montserrat;
+        font-size: get-vh(16px);
+        font-weight: 500;
+        letter-spacing: get-vh(0.8px);
+        &::before{
+          content: '';
+          position: absolute;
+          bottom: get-vh(-12px);
+          height: get-vh(3px);
+          width: 100%;
+          background-color: #000;
+          margin-top: get-vh(12px);
+          display: none;
+        }
+        &.active-page::before{
+          display: block;
+        }
+      }
+
+      & > button{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        width: get-vh(170px);
+        height: get-vh(45px);
+        background-color: #FFE9B2;
+        border: get-vh(1px) solid #555;
+        border-radius: get-vh(50px);
+
+        // & > svg{
+        //   width: get-vh(20px);
+        //   height: get-vh(20px);
+        //   margin-left: get-vh(10px);
+        // }
+
+        & > span{
+          // width: get-vh(80px);
+          font-family: Montserrat;
+          font-size: get-vh(18px);
+          font-weight: 600;
+          // margin-right: get-vh(30px);
+        }
+      }
+      // a {
+      //   margin-right: 15px;
+      //   color: inherit;
+      //   text-decoration: none;
+      // }
+      // svg{
+      //   margin-right: 20px;
+      // }
+    }
+  }
 }

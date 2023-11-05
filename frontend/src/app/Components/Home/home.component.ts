@@ -1,54 +1,53 @@
 import { Component } from "@angular/core";
-import { ThemeService } from "../../InjectableServices/theme.service";
-import { AccountData } from "../../InjectableServices/account.service";
-import { HttpClient } from "@angular/common/http";
-import { API_URL } from "../../../main";
+
 @Component({
     selector: "home-page",
     template: `
-    <header></header>
-    <div class="home-page f-jost">
-        <div *ngIf="account.user != null else notAuth">
-            <p>{{account.user.firstname}}</p>
-            <p>{{account.user.lastname}}</p>
-            <p>{{account.user.email}}</p>
-            <p>{{account.user.birthday?.getDay()}} {{account.user.birthday?.getMonth()}} {{account.user.birthday?.getFullYear()}}</p>
-            <br>
-            <div class="bts-test">
-                <button (click)="clickTest(1)">Client</button>
-                <button (click)="clickTest(2)">Psychologist</button>
-                <button (click)="clickTest(3)">All</button>
-                <button (click)="account.logOut()">LOGOUT</button>
+    <header [activePage]="'home'"></header>
+    <frt-home-part></frt-home-part>
+    <div class="home-page-special-text"><span>Ми можемо тобі допомогти</span></div>
+    <scnd-home-part></scnd-home-part>
+    <div class="home-page-special-text"><span>Чому ми?</span></div>
+    <thrd-home-part></thrd-home-part>
+    <div class="home-page-special-text"><span>Екстрені служби</span></div>
+    <div class="emergency-services-container">
+        <div class="emergency-services-item">
+            <div class="emergency-services-text">Домашнє насильство та гендерна дискримінація</div>
+            <div class="emergency-services-links">
+                <a href="tef: 0800500225">0 800 500 335</a>
+                <br>
+                <a href="tef: 116123">116 123</a>
             </div>
         </div>
-        <ng-template #notAuth>
-            <span>Не авторизований</span>
-        </ng-template>
-        
-    </div>`,
-    styleUrls:[],
-    styles: [`
-    .bts-test { display: flex; flex-direction: column; align-items:center; & > button{border: 1px solid red; width: 10vh; margin: 1vh;} }`]
+        <div class="emergency-services-item">
+            <div class="emergency-services-text">Національна лінія підтримки для дітей</div>
+            <div class="emergency-services-links">
+                <a href="tef: 0800500225">0 800 500 225</a>
+                <br>
+                <a href="tef: 116111">116 111</a>
+            </div>
+        </div>
+        <div class="emergency-services-item">
+            <div class="emergency-services-text">Тяжкі розлади у дітей та дорослих</div>
+            <div class="emergency-services-links">
+                <a href="tef: 0675949446">(067) 594 94 46</a>
+                <br>
+                <a href="tef: 0959136941">0959136941</a>
+            </div>
+        </div>
+        <div class="emergency-services-item">
+            <div class="emergency-services-text">Національна лінія запобігання суїцидам 24/7</div>
+            <div class="emergency-services-links">
+                <a href="tef: 7333">7333</a>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+    `,
+    styleUrls: ['./home.scss'],
 })
 
-export class HomeComponent { 
-    constructor(protected themeService: ThemeService, protected account: AccountData, private http: HttpClient) { }
+export class HomeComponent {
+    constructor() { }
 
-    clickTest(id: number){
-        let url = "";
-        switch(id){
-            case 1: url = "client"; break;
-            case 2: url = "psyhologist"; break;
-            case 3: url = "all"; break;
-            default: return;
-        }
-        this.http.get(API_URL + "accounts/" + url).subscribe({
-            next: (data: any) => {
-                alert("Ви маєте доступ");
-            },
-            error: (er: any) => {
-                console.log(er);
-            }
-        })
-    }
 }
