@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '../interceptor/jwt-interceptor';
 import { HomeModule } from '../components/home/home.module';
-import { FooterComponent } from '../components/footer/footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { FooterComponent } from '../components/footer/footer.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule, HttpClientModule, 
-    HomeModule
+    HomeModule, BrowserAnimationsModule
   ],
   providers: [
     {

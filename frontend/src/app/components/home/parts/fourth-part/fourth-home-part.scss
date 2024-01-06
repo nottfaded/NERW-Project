@@ -1,0 +1,119 @@
+@import "src/variables.scss";
+
+.fourth-home-part{
+  margin-top: get-vh(120px);
+}
+
+.take-specialist-container{
+  background-image: url('../../../../../assets/img/home-page/take-specialist.png');
+  background-size: 100% 100%;
+  width: get-vh(1420px);
+  height: get-vh(300px);
+  margin: auto;
+  margin-bottom: get-vh(120px);
+
+  & > .take-specialist-body{
+    width: get-vh(731px);
+    margin: auto;
+    padding-top: get-vh(60px);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    & > .take-specialist-body-title{
+      color: $white;
+      text-align: center;
+      font-family: Montserrat;
+      font-size: get-vh(32px);
+      font-weight: 600;
+      margin-bottom: get-vh(50px);
+    }
+    & > button{
+      width: get-vh(350px);
+      height: get-vh(60px);
+      background-color: $green-big;
+      border-radius: get-vh(50px);
+      color: $white;
+      font-size: get-vh(24px);
+      font-weight: 700;
+    }
+  }
+}
+
+.cards-container{
+  width: get-vh(1420px);
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: get-vh(110px);
+  margin-bottom: get-vh(120px);
+
+  & > .card{
+    width: get-vh(400px);
+    height: get-vh(500px);
+    border-radius: get-vh(16px);
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 0px get-vh(5px) rgba(0, 0, 0, 0.15);
+
+    & > .card-img{
+      height: get-vh(194px);
+      margin-bottom: get-vh(37px);
+      & > img{
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .card-body{
+      margin: auto;
+      width: get-vh(309px);
+      color: $black-22;
+
+      & > .card-body-title{
+        font-size: get-vh(22px);
+        font-weight: 700;
+        margin-bottom: get-vh(27px);
+      }
+      & > .card-body-text{
+        font-size: get-vh(16px);
+        font-weight: 400;
+      }
+    }
+
+    & > .card-footer{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: get-vh(52px);
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      & > span{
+        color: $gray-high;
+        font-size: get-vh(20px);
+        font-weight: 700;
+        transition: color 0.3s ease;
+      }
+      & > svg{
+        width: get-vh(30px);
+        height: get-vh(15px);
+        position: absolute;
+        right: get-vh(40px);
+        fill: $gray-high;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+      }
+
+      &:hover span{
+        color: $black-22;
+      }
+      &:hover svg{
+        opacity: 1;
+      }
+    }
+
+  }
+}

@@ -20,9 +20,9 @@ namespace backend.Models
         public string Password { get; set; }
         [Column("name")]
         public string Name { get; set; }
-        [Column("surname")]
-        public string Surname { get; set; }
-        [Column("dateOfBirth")]
-        public DateTime DateOfBirth { get; set; }
+        [Column("repairCode")]
+        public string? RepairCode { get; set; }
+        [Column("createdCode")]
+        public DateTime CreatedCode { get; set; }
     }
 }

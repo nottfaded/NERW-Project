@@ -4,27 +4,11 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  column-gap: get-vh(60px);
-  color: $black-22;
-  font-size: get-vh(40px);
-  font-weight: 600;
-  margin-bottom: get-vh(75px);
-  position: relative;
-  top: get-vh(-25px);
-
-  & > span {
-    background-color: $white;
-    white-space: nowrap;
-  }
-
-  &::before,
-  &::after {
-    content: "";
-    margin: auto;
-    height: get-vh(1px);
-    background-color: #d6d6d6;
-    width: 100%;
-  }
+  margin-top: get-vh(120px);
+  margin-bottom: get-vh(60px);
+  color: $gray-medium-low;
+  font-size: get-vh(50px);
+  font-weight: 700;
 }
 
 .home-part-conainer {
@@ -33,34 +17,70 @@
   padding-right: get-vh(200px);
 }
 
-.emergency-services-container {
-  display: flex;
-  justify-content: center;
-  column-gap: get-vh(150px);
-  margin-left: get-vh(345px);
-  margin-right: get-vh(345px);
-  margin-bottom: get-vh(130px);
+.button-up-container{
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: get-vh(75px);
+  top: get-vh(1780px);
 
-  & > .emergency-services-item {
-    width: get-vh(240px);
+  & > .button-up-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: get-vh(75px);
+    height: get-vh(75px);
+    border-radius: 100%;
+    background-color: $green-low;
+    right: get-vh(39px);
+    &::before{
+      content: '';
+      position: absolute;
 
-    & > .emergency-services-text {
-      color: $gray-high;
-      font-size: get-vh(16px);
-      font-weight: 400;
     }
-
-    & > .emergency-services-links {
-      margin-top: get-vh(25px);
-      line-height: get-vh(35px);
-      color: #408cff;
-      font-size: get-vh(20px);
-      font-weight: 400;
-      text-decoration-line: underline;
-
-      & > a {
-        color: #408cff;
-      }
+    & > svg{
+      width: get-vh(24px);
+      height: get-vh(17px);
     }
   }
+  & > .fixed{
+    position: fixed;
+    right: get-vh(39px);
+    bottom: get-vh(35px);
+  }
 }
+
+
+
+// .emergency-services-container {
+//   display: flex;
+//   justify-content: center;
+//   column-gap: get-vh(150px);
+//   margin-left: get-vh(345px);
+//   margin-right: get-vh(345px);
+//   margin-bottom: get-vh(130px);
+
+//   & > .emergency-services-item {
+//     width: get-vh(240px);
+
+//     & > .emergency-services-text {
+//       color: $gray-high;
+//       font-size: get-vh(16px);
+//       font-weight: 400;
+//     }
+
+//     & > .emergency-services-links {
+//       margin-top: get-vh(25px);
+//       line-height: get-vh(35px);
+//       color: #408cff;
+//       font-size: get-vh(20px);
+//       font-weight: 400;
+//       text-decoration-line: underline;
+
+//       & > a {
+//         color: #408cff;
+//       }
+//     }
+//   }
+// }

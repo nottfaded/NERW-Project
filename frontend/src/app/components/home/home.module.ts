@@ -8,10 +8,11 @@ import { CommonModule } from '@angular/common';
 import { SecondHomePartComponent } from './parts/second-part/second-home-part.component';
 import { ThirdHomePartComponent } from './parts/third-part/third-home-part.component';
 import { FooterComponent } from '../footer/footer.component';
+import { FourthHomePartComponent } from './parts/fourth-part/fourth-home-part.component';
 
 @NgModule({
   declarations: [
-    HomeComponent, FirstHomePageComponent, SecondHomePartComponent, ThirdHomePartComponent,
+    HomeComponent, FirstHomePageComponent, SecondHomePartComponent, ThirdHomePartComponent, FourthHomePartComponent,
     HeaderComponent, FooterComponent
   ],
   imports: [

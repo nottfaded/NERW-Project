@@ -1,116 +1,227 @@
 @import "src/variables.scss";
 
-.thrd-home-part {
-  margin-left: get-vh(200px);
-  margin-right: get-vh(200px);
-  margin-bottom: get-vh(100px);
+.block{
+  height: get-vh(430px);
+  width: get-vh(1320px);
+  margin: auto;
+  display: flex;
+  row-gap: get-vh(102px);
 
-  & > .thrd-home-part-block-reasons {
-    display: flex;
-    justify-content: center;
-    column-gap: get-vh(70px);
-    margin-bottom: get-vh(114px);
-
-    & > .thrd-home-part-block-reason {
-      position: relative;
-      width: get-vh(480px);
-
-      & > img {
-        margin-bottom: get-vh(-32px);
-      }
-
-      & > .thrd-home-part-block-reason-text {
-        display: flex;
-        flex-direction: column;
-        row-gap: get-vh(26px);
-        align-items: center;
-        border-top: get-vh(1px) solid #eee;
-        border-left: get-vh(1px) solid #eee;
-        border-right: get-vh(1px) solid #eee;
-        border-radius: get-vh(10px);
-        box-shadow: get-vh(5px) get-vh(-10px) get-vh(10px) rgba(0, 0, 0, 0.05),
-          get-vh(-5px) get-vh(-5px) get-vh(10px) rgba(0, 0, 0, 0.05);
-        padding: get-vh(40px);
-
-        & > .thrd-home-part-block-reason-text-title {
-          text-align: center;
-          color: $black-11;
-          font-size: get-vh(20px);
-          font-weight: 700;
-        }
-        & > .thrd-home-part-block-reason-text-body {
-          text-align: center;
-          color: $black-11;
-          font-size: get-vh(16px);
-          font-weight: 500;
-        }
-      }
+  &:nth-child(1), &:nth-child(2){
+    margin-bottom: get-vh(55px);
+  }
+  &:nth-child(even){
+    flex-direction: row-reverse;
+    & > div {
+      text-align: end;
     }
   }
 
-  & > .thrd-home-part-block-middle-text{
-    margin-bottom: get-vh(140px);
-    text-align: center;
-    color: $black-11;
-    font-size: get-vh(20px);
-    font-weight: 500;
-    line-height: get-vh(35px);
+  
+  & > .block-number{
+    width: get-vh(220px);
+    font-size: get-vh(200px);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: get-vh(3px) $black-44;
+    opacity: 0.2;
+    & > div{
+      margin-top: get-vh(75px);
+      margin-bottom: get-vh(115px);
+    }
   }
 
-  .thrd-home-part-block-cards{
+
+  & > .block-info{
     display: flex;
-    justify-content: center;
-    column-gap: get-vh(70px);
+    width: get-vh(1100px);
+    height: 100%;
+    box-shadow: 0px 0px get-vh(10px) rgba(0, 0, 0, 0.1);
+    border-radius: get-vh(50px);
 
-    & > .thrd-home-part-block-card{
-      position: relative;
-      width: get-vh(400px);
-      height: get-vh(500px);
-      border: get-vh(1px) solid $gray-medium;
-      border-radius: get-vh(20px);
+    & > .block-info-img{
+      max-width: get-vh(450px);
+      height: 100%;
+      display: flex;
+      align-items: end;
+      & > img{
+        max-width: get-vh(450px);
+        height: get-vh(400px);
+      }
+    }
 
-      & > .thrd-home-part-block-card-body{
-        text-align: center;
+
+    & > .block-info-text-container{
+      width: get-vh(625px);
+      margin-left: get-vh(50px);
+      text-align: start;
+
+      & > .block-info-text-container-mg{
         display: flex;
         flex-direction: column;
-        align-items: center;
-        row-gap: get-vh(35px);
-        color: $black-11;
-        & > .thrd-home-part-block-card-body-title{
-          margin-top: get-vh(35px);
-          font-size: get-vh(20px);
-          font-weight: 700;
-        }
+        justify-content: center;
+        height: get-vh(355px);
+        margin-top: get-vh(35px);
+        margin-bottom: get-vh(35px);
 
-        & > .thrd-home-part-block-card-body-text{
-          font-size: get-vh(16px);
-          font-weight: 400;
-          width: get-vh(330px);
-        }
-      }
-
-      & > .thrd-home-part-block-card-footer{
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        height: get-vh(50px);
-        & > button{
-          text-align: center;
-          width: 100%;
-          height: 100%;
-          background-color: $gray-medium;
-          border-radius: 0px 0px get-vh(15px) get-vh(15px);
-          color: $white;
-          font-size: get-vh(20px);
-          font-weight: 700;
-          transition: background-color 0.3s ease;
-
-          &:hover{
-            background-color: $brown;
+        & > .block-info-text-container-title{
+          display: flex;
+          row-gap: get-vh(7px);
+          flex-direction: column;
+          & > .block-info-text-container-title-main{
+            color: $black-22;
+            font-size: get-vh(28px);
+            font-weight: 700;
+          }
+          & > .block-info-text-container-title-sub{
+            color: $black-44;
+            font-size: get-vh(18px);
+            font-weight: 400;
           }
         }
+
+        & > .block-info-text-container-body{
+          position: relative;
+          width: get-vh(455px);
+          margin-top: get-vh(33px);
+
+          & > .block-info-text-container-body-up{
+            display: flex;
+            flex-direction: row;
+            column-gap: get-vh(13px);
+            color: $black-22;
+            font-size: get-vh(20px);
+            font-weight: 700;
+
+            & > div > svg{
+              width: get-vh(28px);
+              height: get-vh(22px);
+            }
+          }
+
+          & > .block-info-text-container-body-down{
+            color: $black-44;
+            font-size: get-vh(16px);
+            margin-top: get-vh(10px);
+          }
+
+          &:nth-child(n+3):before{
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: get-vh(1px);
+            top: get-vh(-15px);
+            background-image: repeating-linear-gradient(to right, $gray-medium 0px, $gray-medium get-vh(5px), transparent get-vh(5px), transparent get-vh(9px));
+          }
+        }
+
+
       }
+
     }
 
+
+  }
+
+}
+
+
+.step-by-step-container{
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: get-vh(1386px);
+  height: get-vh(565px);
+  margin-bottom: get-vh(75px);
+
+  & > .step-by-step-img > img{
+    width: get-vh(652px);
+    height: get-vh(510px);
+  }
+
+  & > .step-by-step-info-container{
+    width: get-vh(732px);
+    height: 100%;
+
+    & > .step-by-step-info{
+      counter-increment: item;
+      position: relative;
+      padding-bottom: get-vh(15px);
+
+      & > .step-by-step-info-title{
+        color: $black-22;
+        font-size: get-vh(24px);
+        font-weight: 700;
+        // position: relative;
+        margin-left: get-vh(60px);
+  
+        &::before{
+          z-index: 1;
+          position: absolute;
+          content: counter(item);
+          left: 0px;
+          width: get-vh(42px);
+          height: get-vh(42px);
+          border-radius: 50%;
+          background-color: $green-big;
+          color: $white;
+          font-size: get-vh(24px);
+          font-weight: 700;
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+        }
+        &::after{
+          content: '';
+          position: absolute;
+          left: get-vh(21px);
+          width: get-vh(1px);
+          height: 100%;
+          background-image: repeating-linear-gradient($gray-medium 0px, $gray-medium get-vh(5px), transparent get-vh(5px), transparent get-vh(10px));
+        }
+      }
+      &:last-child > .step-by-step-info-title::after{
+        display: none;
+      }
+
+
+      & > .step-by-step-info-body{
+        margin-bottom: get-vh(69px);
+        margin-left: get-vh(60px);
+        margin-top: get-vh(15px);
+        color: $black-44;
+        font-size: get-vh(20px);
+      }
+    }
+  }
+  
+}
+
+.test-btn-container{
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  width: get-vh(1386px);
+
+  & > button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: get-vh(23px);
+    width: get-vh(275px);
+    height: get-vh(50px);
+    background-color: $green-big;
+    border-radius: get-vh(50px);
+
+    & > div{
+      color: $white;
+      font-size: get-vh(20px);
+      font-weight: 700;
+
+      & > svg{
+        width: get-vh(24px);
+        height: get-vh(13px);
+      }
+    }
   }
 }

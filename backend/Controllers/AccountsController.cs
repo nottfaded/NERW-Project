@@ -32,8 +32,6 @@ namespace backend.Controllers
             await _context.Accounts.AddAsync(new Account()
             {
                 Name = account.Name,
-                Surname = account.Surname,
-                DateOfBirth = account.Birthday,
                 Email = account.Email,
                 Password = Hasher.HashPassword(account.Password),
                 Role = Role.Клієнт,
@@ -46,32 +44,80 @@ namespace backend.Controllers
         public async Task<IActionResult> AuthenticateAccount([FromBody] AccountLogInDto logInData)
         {
             var account = await _account.GetAccountByEmail(logInData.Email);
-            if(account == null) return Unauthorized(1);
-            if (!Hasher.VerifyPassword(logInData.Password, account.Password)) return Unauthorized(2);
+            if(account == null) return NotFound(1);
+            if (!Hasher.VerifyPassword(logInData.Password, account.Password)) return NotFound(2);
 
             var jwtToken = _jwtService.Generate(account);
             return Ok(new {jwtToken, account});
         }
 
-        [HttpGet("client")]
-        [Authorize(Roles = nameof(Role.Клієнт))]
-        public IActionResult ClickClient()
+        [HttpPost("forgetPassword")]
+        public async Task<IActionResult> ForgetPassword([FromBody] string email)
         {
+            var account = await _account.GetAccountByEmail(email);
+            if (account == null) return NotFound();
+
+            if (account.RepairCode != null && (DateTime.Now - account.CreatedCode).TotalMinutes < 2)
+                return BadRequest();
+
+            var code = new StringBuilder();
+            var rand = new Random();
+            for (var i = 0; i < 6; i++)
+            {
+                code.Append(rand.Next(0, 10));
+            }
+
+            account.RepairCode = code.ToString();
+            account.CreatedCode = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(code);
+        }
+        [HttpPost("checkRepairCode")]
+        public async Task<IActionResult> CheckRepairCode([FromBody] RepairCodeDto data)
+        {
+            var account = await _account.GetAccountByEmail(data.Email);
+            if (account == null) return NotFound();
+
+            if (account.RepairCode == null)
+                return BadRequest("Щось трапилось не так");
+            if (account.RepairCode != data.Code)
+                return BadRequest("Неправильний код");
+
             return Ok();
         }
-        [HttpGet("psyhologist")]
-        [Authorize(Roles = nameof(Role.Психолог))]
-        public IActionResult ClickPsyhologist()
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto data)
         {
+            var account = await _account.GetAccountByEmail(data.Email);
+            if (account == null) return NotFound();
+
+            account.Password = Hasher.HashPassword(data.NewPassword);
+            await _context.SaveChangesAsync();
+
             return Ok();
         }
-        [HttpGet("all")]
-        [Authorize(Roles = $"{nameof(Role.Психолог)},{nameof(Role.Клієнт)}")]
-        public IActionResult ClickAll()
-        {
-            return Ok();
-        }
-        
+
+        //[HttpGet("client")]
+        //[Authorize(Roles = nameof(Role.Клієнт))]
+        //public IActionResult ClickClient()
+        //{
+        //    return Ok();
+        //}
+        //[HttpGet("psyhologist")]
+        //[Authorize(Roles = nameof(Role.Психолог))]
+        //public IActionResult ClickPsyhologist()
+        //{
+        //    return Ok();
+        //}
+        //[HttpGet("all")]
+        //[Authorize(Roles = $"{nameof(Role.Психолог)},{nameof(Role.Клієнт)}")]
+        //public IActionResult ClickAll()
+        //{
+        //    return Ok();
+        //}
+
     }
     public record AccountCreateDto
     {
@@ -79,18 +125,12 @@ namespace backend.Controllers
         [MinLength(3)]
         public string Name { get; set; }
         [Required]
-        [MinLength(3)]
-        public string Surname { get; set; }
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
         [Required]
         [MinLength(6)]
         public string Password { get; set; }
-        [Required]
-        public DateTime Birthday { get; set; }
     }
-
     public record AccountLogInDto
     {
         [Required]
@@ -98,5 +138,21 @@ namespace backend.Controllers
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+    }
+    public record RepairCodeDto
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        public string Code { get; set; }
+    }
+    public record ChangePasswordDto
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        public string NewPassword { get; set; }
     }
 }

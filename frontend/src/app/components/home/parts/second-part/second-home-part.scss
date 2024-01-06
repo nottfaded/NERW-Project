@@ -7,208 +7,63 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         align-items: center;
-        margin-bottom: get-vh(80px);
-        margin-left: get-vh(150px);
-        margin-right: get-vh(150px);
+        row-gap: get-vh(25px);
+        width: get-vh(1500px);
+        margin-left: auto;
+        margin-right: auto;
 
-        & > .scnd-home-part-images-item{
+        .scnd-home-part-images-item{
+            margin: auto;
             position: relative;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             height: 100%;
             text-align: center;
-
-            & > img{
-                min-width: get-vh(570px);
-                min-height: get-vh(348px);
-                opacity: 0.5;
-                transition: opacity 0.5s ease;
+            width: get-vh(440px);
+            height: get-vh(440px);
+            align-items: center;
+            row-gap: get-vh(10px);
+            border-radius: get-vh(15px);
+            
+            &:hover{
+                box-shadow: get-vh(0px) get-vh(1px) get-vh(5px) get-vh(0px) rgba(0, 0, 0, 0.20);
             }
+            transition: box-shadow 0.25s ease;
 
-            & > .scnd-home-part-images-item-text{
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                bottom: 0;
+            & > .scnd-home-part-images-item-imgs{
+                position: relative;
                 width: 100%;
-                overflow: hidden;
+                height: get-vh(301px);
+                text-align: center;
+                color: $black-22;
 
-                &::before{
-                    content: '';
+                & > img{
                     position: absolute;
-                    width: 100%;
-                    height: 45%;
-                    bottom: 0;
-                    background-color: rgba(255, 255, 255, 0.9);
-                    filter: blur(get-vh(2.5px));
-                    transition: height 0.25s ease;
+                    left: 0;
+                    width: get-vh(450px);
+                    height: get-vh(301px);
                 }
-
-                & > .scnd-home-part-images-item-text-body{
-                    position: relative;
-                    margin-bottom: get-vh(10px);
-                    color: $black-11;
-                    font-family: Montserrat;
-                    font-size: get-vh(16px);
-                    font-weight: 400;
-                    text-align: center;
-                    z-index: 1;
-                    padding-top: get-vh(10px);
-                    text-wrap: balance;
+                .notHovered{
                     opacity: 0;
-                    transition: opacity 0.25s ease, bottom 0.25s ease;
-                    bottom: get-vh(-100px);
-                    width: 60%;
-                    margin-left: auto;
-                    margin-right: auto;
+                    transition: opacity 0.25s ease;
                 }
-
-                & > .scnd-home-part-images-item-text-title{
-                    width: 100%;
-                    color: $black-11;
-                    font-size: get-vh(20px);
-                    font-weight: 600;
-                    padding-bottom: get-vh(25px);
-                    padding-top: get-vh(10px);
-                    z-index: 1;
-                    opacity: 0.5;
+                .hovered{
+                    opacity: 1;
                     transition: opacity 0.25s ease;
                 }
             }
 
-            &:hover{
-                cursor: pointer;
-                & > img{
-                    opacity: 1;
-                }
-                & > .scnd-home-part-images-item-text > .scnd-home-part-images-item-text-body{
-                    opacity: 1;
-                    bottom: get-vh(0px);
-                }
-                & > .scnd-home-part-images-item-text::before{
-                    height: 100%;
-                }
-                & > .scnd-home-part-images-item-text > .scnd-home-part-images-item-text-title{
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    & > .step-by-step-part-title{
-        position: relative;
-        & > .step-by-step-part-title-text{
-            position: absolute;
-            color: $black-22;
-            font-family: Montserrat;
-            font-size: get-vh(40px);
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-            top: get-vh(-25px);
-    
-            & > span{
-                background-color: $white;
-            }
-        }
-    }
-    
-    & > .myTargetElement{
-        width: 100%;
-        height: get-vh(20px);
-    }
-
-    & > .step-by-step-part{
-        background-color: #FFFCF5;
-        padding-left: get-vh(150px);
-        padding-right: get-vh(150px);
-
-        & > .step-by-step-part-container{
-            display: flex;
-            justify-content: center;
-            column-gap: get-vh(130px);
-            padding-top: get-vh(120px);
-            padding-bottom: get-vh(80px);
-
-            & > .step-by-step-part-container-left{
-                width: 100%;
-                height: 100%;
-                text-align: center;
-            }
-            & > .step-by-step-part-container-right{
-                width: 100%;
-
-                ol {
-                    list-style: none;
-                    counter-reset: list-counter;
-                    padding-left: 0;
-                    & > li {
-                        position: relative;
-                        counter-increment: list-counter;
-                        margin-bottom: get-vh(50px);
-                      
-                        &::before {
-                          content: counter(list-counter);
-                          display: inline-block;
-                          width: get-vh(50px);
-                          height: get-vh(50px);
-                          background-color: $brown-low;
-                          border-radius: 50%;
-                          text-align: center;
-                          line-height: get-vh(50px);
-                          margin-right: get-vh(50px);
-                          color: $white;
-                          font-family: Jost;
-                          font-size: get-vh(24px);
-                          font-weight: 600;
-                        }
-                        &::after {
-                            content: "";
-                            position: absolute;
-                            top: 50%;
-                            left: get-vh(25px);
-                            height: get-vh(100px);
-                            border-left: get-vh(2px) dotted $black-11;
-                        }
-                        &:last-child::after{
-                            display: none;
-                        }
-
-                        & > .step-by-step-part-container-right-list-title{
-                            color: $black-11;
-                            font-size: get-vh(24px);
-                            font-weight: 600;
-                            margin-bottom: get-vh(10px);
-                        }
-                        & > .step-by-step-part-container-right-list-body{
-                            color: $black-11;
-                            font-size: get-vh(20px);
-                            font-weight: 300;
-                            letter-spacing: get-vh(-0.4px);
-                            width: get-vh(646px);
-                            margin-left: get-vh(108px);
-                        }
-                    }
-                }
-                  
-            }
-        }
-
-        & > .step-by-step-part-btn{
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding-bottom: get-vh(100px);
-            & > button{
-                background-color: $brown-low;
-                border-radius: get-vh(50px);
-                width: get-vh(300px);
-                height: get-vh(55px);
-                color: $white;
-                text-align: center;
+            & > .scnd-home-part-images-item-title{
                 font-size: get-vh(24px);
-                font-weight: 500;
+                font-weight: 600;
             }
+            & > .scnd-home-part-images-item-body{
+                font-size: get-vh(16px);
+                font-weight: 400;
+            }
+            
         }
     }
+
 }

@@ -1,24 +1,31 @@
 @function get-vh($object) {
-    $vh: (1080 * 0.01) * 1px;
+    $vh: (920 * 0.01) * 1px;
     @return ($object / $vh) * 1vh;
 }
 
 $brown: #321600;
 $brown-low: #4F2E16;
-$black-11: #111111;
 $black-22: #222222;
-$black-55: #555555;
-$black-33: #444444;
+$black-44: #444;
+
 $gray-high: #949494;
 $gray-medium: #C6C6C6;
+$gray-medium-low: #C6C6C6;
 $gray-low: #EDEDED;
+
 $white: #FFFFFF;
+
 $orange-high: #FFC96C;
 $orange-medium: #FFDC9F;
 $orange-medium-low: #FFE9B2;
 $orange-low: #FFF1CC;
+
 $red-high: #FF5050;
 $red-medium: #FF7272;
 $red-low: #FCADAD;
+
 $green-high: #0C5500;
-$green-low: #B2FEA5;
+$green-medium: #66BC8F;
+$green-low: #74B69D;
+$green-light: #F1F9F3;
+$green-big: #3FAB84;
