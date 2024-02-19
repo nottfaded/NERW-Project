@@ -23,40 +23,110 @@ namespace backend.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedCode")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("createdCode");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("email");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("name");
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NotifySettings")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("password");
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("RepairCode")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("repairCode");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Role")
                         .HasColumnType("int")
                         .HasColumnName("fk_role");
 
+                    b.Property<string>("Surname")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("backend.Models.Session", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(168)
+                        .HasColumnType("varchar(168)");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int")
+                        .HasColumnName("fk_client");
+
+                    b.Property<string>("ClientPhone")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("varchar(13)");
+
+                    b.Property<int>("CountMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("PsychoId")
+                        .HasColumnType("int")
+                        .HasColumnName("fk_psycho");
+
+                    b.Property<uint>("Rating")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("PsychoId");
+
+                    b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("backend.Models.Session", b =>
+                {
+                    b.HasOne("backend.Models.Account", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.Account", "Psycho")
+                        .WithMany()
+                        .HasForeignKey("PsychoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Psycho");
                 });
 #pragma warning restore 612, 618
         }

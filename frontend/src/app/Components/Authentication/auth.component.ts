@@ -148,7 +148,7 @@ import { AccountData } from "../../injectable-services/account.service";
         
               <div class="block-inputs-container">
                 <div>
-                  <input [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()"
+                  <input maxlength="20" [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()"
                   [ngClass]="{
                     'incorrect-input': password.length > 0 && !validPassword,
                     'correct-input': validPassword
@@ -232,7 +232,7 @@ import { AccountData } from "../../injectable-services/account.service";
                     <label>Ел. пошта</label>
                   </div>
                   <div>
-                    <input [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()"
+                    <input maxlength="20" [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()"
                     [ngClass]="{
                       'incorrect-input': password.length > 0 && !validPassword,
                       'correct-input': validPassword
@@ -292,7 +292,7 @@ import { AccountData } from "../../injectable-services/account.service";
                     <label>Ел. пошта</label>
                   </div>
                   <div>
-                    <input [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()">
+                    <input maxlength="20" [type]="passIsUnlock ? 'text' : 'password'" [(ngModel)]="password" (ngModelChange)="setValidPassword()">
                     <label>Новий пароль</label>
                     <div (click)="passIsUnlock = !passIsUnlock"><img [src]="'assets/img/authentication/' + (passIsUnlock ? 'eye-pass-unlock.svg' : 'eye-pass-lock.svg')" alt="eye-pass"></div>
                   </div>
@@ -472,7 +472,7 @@ export class AuthComponent {
     .subscribe({
       next: (data: any) => {
         localStorage.setItem("accessToken", data.jwtToken);
-        localStorage.setItem("accountData", JSON.stringify(data.account));
+        localStorage.setItem("accountData", JSON.stringify(data.accData));
         this.account.getData();
         this.router.navigate(['']);
       },

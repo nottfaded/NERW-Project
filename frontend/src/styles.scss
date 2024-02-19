@@ -19,6 +19,7 @@
   
 
 @import './reset.scss';
+@import './variables.scss';
   
 // .dark-theme{
 //     background-color: black;
@@ -32,8 +33,35 @@
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Lato; }
+body { margin: 0; font-family: Lato; color: $black-22; }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.custom-select{
+  min-width: get-vh(160px);
+  border: get-vh(1px) solid $gray-medium;
+  border-radius: get-vh(10px);
+  padding-left: get-vh(15px);
+  padding-top: get-vh(8px);
+  padding-bottom: get-vh(8px);
+  font-size: get-vh(16px);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('assets/img/arrow-for-select.svg') no-repeat right center;
+  background-size: get-vh(30px) get-vh(7px);
+
+  &:hover{
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  & > option:active{
+    background-color: red;
+  }
 }

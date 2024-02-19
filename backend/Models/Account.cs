@@ -5,24 +5,29 @@ using Newtonsoft.Json.Converters;
 
 namespace backend.Models
 {
-    public enum Role {Клієнт = 1, Психолог }
+    public enum Role { Client = 1, Psychologist }
     public class Account
     {
         [Key]
-        [Column("id")]
         public int Id { get; set; }
         [Column("fk_role")]
         [ForeignKey("account_role_fk")]
         public Role Role { get; set; }
-        [Column("email")]
         public string Email { get; set; }
-        [Column("password")]
         public string Password { get; set; }
-        [Column("name")]
         public string Name { get; set; }
-        [Column("repairCode")]
+        public string? Surname { get; set; }
+        public string Phone { get; set; } = string.Empty;
         public string? RepairCode { get; set; }
-        [Column("createdCode")]
         public DateTime CreatedCode { get; set; }
+        public List<NotifySetting> NotifySettings { get; set; } = new();
+    }
+
+    public class NotifySetting
+    {
+        public string Name { get; set; }
+        public bool Mail { get; set; } = false;
+        public bool Telegram { get; set; } = false;
+        public bool Site { get; set; } = false;
     }
 }

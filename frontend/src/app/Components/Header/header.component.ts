@@ -22,19 +22,16 @@ import { Router } from "@angular/router";
                 </div>
             </div>
             <div class="right">
-                <a routerLink="/" [ngClass]="{'active-page': activePage === 'home'}">Головна</a>
-                <a routerLink="/psychologists" [ngClass]="{'active-page': activePage === 'psychologists'}">Терапевти</a>
-                <a routerLink="/tests" [ngClass]="{'active-page': activePage === 'tests'}">Співпраця</a>
-                <a routerLink="/questions" [ngClass]="{'active-page': activePage === 'questions'}">Про нас</a>
-                <a routerLink="/contacts" [ngClass]="{'active-page': activePage === 'contacts'}">Питання-відповіді</a>
-                <button (click)="navigateToAuthorization()"> 
-                    <ng-container *ngIf="account.data; else isAuth">
-                        <span>{{ account.data.firstName.slice(0, 9) }}{{ account.data.firstName.length > 9 ? '...' : '' }}</span>
-                    </ng-container>
-                    <ng-template #isAuth>
-                        <span>Увійти</span>
-                    </ng-template>
-                </button>
+                <a routerLink="/" [class.active-page]="activePage === 'home'">Головна</a>
+                <a routerLink="/psychologists" [class.active-page]="activePage === 'psychologists'">Терапевти</a>
+                <a routerLink="/tests" [class.active-page]="activePage === 'tests'">Співпраця</a>
+                <a routerLink="/questions" [class.active-page]="activePage === 'questions'">Про нас</a>
+                <a routerLink="/contacts" [class.active-page]="activePage === 'contacts'">Питання-відповіді</a>
+                    @if(account.data){
+                        <button [routerLink]="'/cabinet'"><span>{{ account.data.firstName.slice(0, 9) }}{{ account.data.firstName.length > 9 ? '...' : '' }}</span></button>
+                    } @else {
+                        <button (click)="navigateToAuthorization()"><span>Увійти</span></button>
+                    }
             </div>
         </div>
     </div>
@@ -43,14 +40,14 @@ import { Router } from "@angular/router";
 })
 
 export class HeaderComponent {
-    @Input() activePage: string = ''; 
+    @Input() activePage: string = '';
     backgroundColor: string = 'white';
 
-    constructor(private router: Router, protected account: AccountData) {}
+    constructor(private router: Router, protected account: AccountData) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['activePage']) {
-            if(this.activePage === 'home') this.backgroundColor = '#F1F9F3';
+            if (this.activePage === 'home') this.backgroundColor = '#F1F9F3';
             else this.backgroundColor = 'white';
         }
     }

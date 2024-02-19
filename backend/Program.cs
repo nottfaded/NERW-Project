@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ISession = backend.Interfaces.ISession;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
 var configuration = builder.Configuration;
+var jwtService = new JwtService(configuration);
 
 // Add services to the container.
 builder.Services
@@ -26,18 +29,13 @@ builder.Services
     .AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true,
-        ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-    };
+    options.TokenValidationParameters = jwtService.GetTokenValidationParameters();
 });
 builder.Services.AddScoped<JwtService>();
+
+
 builder.Services.AddScoped<IAccount, AccountRepository>();
+builder.Services.AddScoped<ISession, SessionRepository>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

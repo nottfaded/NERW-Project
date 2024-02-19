@@ -29,12 +29,22 @@ namespace backend.Controllers
         public async Task<IActionResult> CreateNewAccount([FromBody] AccountCreateDto account)
         {
             if(await _account.GetAccountByEmail(account.Email) != null) return BadRequest();
-            await _context.Accounts.AddAsync(new Account()
+
+            var notifySettings = new List<NotifySetting>
+            {
+                new() { Name = "SessionNotPaid" },
+                new() { Name = "SessionTransfer" },
+                new() { Name = "SessionCancellation" },
+                new() { Name = "TaskReminders" },
+                new() { Name = "OneHoureBefore" },
+            };
+            await _context.Accounts.AddAsync(new Account
             {
                 Name = account.Name,
                 Email = account.Email,
                 Password = Hasher.HashPassword(account.Password),
-                Role = Role.Клієнт,
+                Role = Role.Client,
+                NotifySettings = notifySettings
             });
             await _context.SaveChangesAsync();
             return Ok();
@@ -48,7 +58,17 @@ namespace backend.Controllers
             if (!Hasher.VerifyPassword(logInData.Password, account.Password)) return NotFound(2);
 
             var jwtToken = _jwtService.Generate(account);
-            return Ok(new {jwtToken, account});
+            var accData = new
+            {
+                account.Id,
+                account.Role,
+                account.Email,
+                account.Name,
+                account.Surname,
+                account.NotifySettings,
+                account.Phone
+            };
+            return Ok(new {jwtToken, accData });
         }
 
         [HttpPost("forgetPassword")]
@@ -112,7 +132,7 @@ namespace backend.Controllers
         //    return Ok();
         //}
         //[HttpGet("all")]
-        //[Authorize(Roles = $"{nameof(Role.Психолог)},{nameof(Role.Клієнт)}")]
+        //[Authorize(Roles = $"{nameof(Role.Psychologist)},{nameof(Role.Client)}")]
         //public IActionResult ClickAll()
         //{
         //    return Ok();

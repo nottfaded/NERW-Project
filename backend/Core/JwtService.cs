@@ -2,12 +2,15 @@
 using System.Security.Claims;
 using System.Text;
 using backend.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Core
 {
     public class JwtService
     {
+        private static readonly JwtSecurityTokenHandler TokenHandler = new();
         private readonly IConfiguration _configuration;
 
         public JwtService(IConfiguration configuration)
@@ -33,7 +36,50 @@ namespace backend.Core
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return TokenHandler.WriteToken(token);
+        }
+
+        public string? GetTokenFromHttpContext(HttpContext context) => context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+        public TokenValidationParameters GetTokenValidationParameters()
+        {
+            return new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]))
+            };
+        }
+
+
+        public bool ValidById(int id, string? token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+
+            try
+            {
+                var validationParameters = GetTokenValidationParameters();
+                var claimsPrincipal = TokenHandler.ValidateToken(token, validationParameters, out _);
+
+                var userIdClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "accountId");
+
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId))
+                {
+                    return userId == id;
+                }
+            }
+            catch (SecurityTokenException)
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }

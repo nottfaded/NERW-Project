@@ -1,0 +1,40 @@
+.custom-dropdown {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.selected-option {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #ccc;
+
+  & > .fi{
+    width: get-vh(19px);
+    height: get-vh(14px);
+  }
+}
+
+.options {
+  max-height: 100px;
+  width: 200px;
+  overflow-y: scroll;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  display: none;
+}
+
+.options.open {
+  display: block;
+}
+
+.options li {
+  padding: 8px;
+  cursor: pointer;
+}

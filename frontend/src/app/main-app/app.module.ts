@@ -10,16 +10,16 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '../interceptor/jwt-interceptor';
 import { HomeModule } from '../components/home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CabinetModule } from '../components/cabinet/cabinet.model';
 
 @NgModule({
   declarations: [
     AppComponent, ContactsComponent, AuthComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule, HttpClientModule, 
-    HomeModule, BrowserAnimationsModule
+    BrowserModule, AppRoutingModule, FormsModule, 
+    HttpClientModule, HomeModule, BrowserAnimationsModule, 
+    CabinetModule
   ],
   providers: [
     {

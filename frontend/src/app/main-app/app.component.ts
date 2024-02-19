@@ -5,8 +5,16 @@ import { Component } from '@angular/core';
   template: `
   <router-outlet></router-outlet>
   `,
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.scss']
 })
 export class AppComponent {
 
+}
+
+export const getCurrentDateTime = () => {
+  let localDate = new Date();
+  let offset = localDate.getTimezoneOffset();
+  let kievDate = new Date(localDate.getTime() + (offset + 120) * 60000);
+
+  return kievDate;
 }

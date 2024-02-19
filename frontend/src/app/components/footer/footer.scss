@@ -8,7 +8,7 @@
   height: get-vh(185px);
   background-color: $black-22;
 
-  & > .company-name{
+  & > .company-name {
     width: 100%;
     height: 100%;
     display: flex;
@@ -21,71 +21,74 @@
     line-height: get-vh(100px);
     letter-spacing: get-vh(0.45px);
   }
-  & > .links-container{
+  & > .links-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    & > .link-item{
-      margin: auto;
-      width: get-vh(250px);
-      height: get-vh(125px);
+    & > .link-item {
+      margin: 0 auto;
+      margin-top: get-vh(29px);
+      display: flex;
+      flex-direction: column;
+      gap: get-vh(14px);
+      width: fit-content;
+      height: get-vh(126px);
 
-      & > ul{
-        & > li:first-child > a{
-          color: $gray-high;
-          font-family: Montserrat;
-          font-size: get-vh(22px);
-          font-weight: 600;
-        }
-        & > li > a{
-          color: var(--white, #FFF);
-          font-family: Lato;
-          font-size: 16px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-        }
-        & > li:not(:last-child){
-          margin-bottom: get-vh(14px);
-        }
-
-        & > .icons{
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-
-          & > a{
-            width: get-vh(42px);
-            height: get-vh(42px);
-          }
-        }
+      & > li:first-child,
+      & > li:first-child a {
+        color: $gray-high;
+        font-family: Montserrat;
+        font-size: get-vh(22px);
+        font-weight: 600;
+      }
+      & > li,
+      & > li > a {
+        color: var(--white, #fff);
+        font-family: Lato;
+        font-size: get-vh(16px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
       }
 
+      &:last-child {
+        width: get-vh(250px);
+      }
+
+      & > .icons {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+
+        & > a {
+          width: get-vh(42px);
+          height: get-vh(42px);
+        }
+      }
     }
   }
 }
 
-.sub-footer{
+.sub-footer {
   display: grid;
   grid-template-columns: auto auto;
   background-color: #000;
   height: get-vh(37px);
-  
-  & > div{
+
+  & > div {
     display: flex;
     align-items: center;
     color: $gray-medium;
     font-size: get-vh(15px);
     font-weight: 700;
-    & > span > a{
+    & > span > a {
       color: $gray-medium;
       text-decoration: underline;
     }
   }
-  & > div:first-child{
+  & > div:first-child {
     margin-left: get-vh(176px);
-    
   }
-  & > div:last-child{
+  & > div:last-child {
     justify-content: end;
     margin-right: get-vh(250px);
   }
