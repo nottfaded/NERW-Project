@@ -1,5 +1,6 @@
 ﻿using backend.Interfaces;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,43 +21,43 @@ namespace backend.Controllers
             _session = session;
         }
 
-        [HttpPost("test")]
-        public async Task<IActionResult> Test()
-        {
-            var client = await _account.GetAccountById(7);
-            var psycho = await _account.GetAccountById(8);
+        //[HttpPost("test")]
+        //public async Task<IActionResult> Test()
+        //{
+        //    var client = await _account.GetAccountById(7);
+        //    var psycho = await _account.GetAccountById(8);
 
-            if (client is not { Role: Role.Client })
-            {
-                return BadRequest();
-            }
+        //    if (client is not { Role: Role.Client })
+        //    {
+        //        return BadRequest();
+        //    }
 
-            if (psycho is not { Role: Role.Psychologist })
-            {
-                return BadRequest();
-            }
+        //    if (psycho is not { Role: Role.Psychologist })
+        //    {
+        //        return BadRequest();
+        //    }
 
-            await _session.AddSession(new Session()
-            {
-                Client = client,
-                ClientId = client.Id,
-                Psycho = psycho,
-                PsychoId = psycho.Id,
-                Date = DateTime.Now,
-                CountMinutes = 50,
-            });
+        //    await _session.AddSession(new Session()
+        //    {
+        //        Client = client,
+        //        ClientId = client.Id,
+        //        Psycho = psycho,
+        //        PsychoId = psycho.Id,
+        //        Date = DateTime.Now,
+        //        CountMinutes = 50,
+        //    });
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         [HttpGet("getSessions/{userId}")]
         public async Task<IActionResult> GetSessionsByUser(int userId)
         {
-            var user = await _account.GetAccountById(userId);
+            var user = await _account.GetById(userId, false);
 
             if (user == null) return NotFound();
 
-            var sessions = await _session.GetSessionsByAccount(user);
+            var sessions = await _session.GetByAccount(user);
             var sessionsFilter = user.Role == Role.Client
                 ? sessions.Select(i => new
                 {
@@ -68,7 +69,7 @@ namespace backend.Controllers
                     i.Street,
                     status = i.Status.ToString(),
                     i.Rating,
-                    User = new { i.Psycho.Name, i.Psycho.Surname, i.Psycho.Email, i.Psycho.Phone }
+                    User = new { i.Psycho.Firstname, i.Psycho.Lastname, i.Psycho.Email, i.Psycho.Phone }
                 })
                 : sessions.Select(i => new
                 {
@@ -80,11 +81,12 @@ namespace backend.Controllers
                     i.Street,
                     status = i.Status.ToString(),
                     i.Rating,
-                    User = new { i.Client.Name, i.Client.Surname, i.Client.Email, i.Client.Phone }
+                    User = new { i.Client.Firstname, i.Client.Lastname, i.Client.Email, i.Client.Phone }
                 });
 
 
             return Ok(sessionsFilter);
         }
+
     }
 }

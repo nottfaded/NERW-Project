@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { getCurrentDateTime } from '../main-app/app.component';
 import { BehaviorSubject } from 'rxjs';
+import { Role } from './account.service';
+import { TypeOfTherapy } from '../models/typeOfTherapy';
 
 @Injectable({providedIn: 'root'})
 export class CabinetService {
@@ -10,6 +12,9 @@ export class CabinetService {
     private _allSessionWasTaken = new BehaviorSubject<boolean>(false);
     allSessions$ = this._allSessionWasTaken.asObservable();
 
+    specializations : Specialization[] = [];
+    typeOfTherapies : TypeOfTherapy[] = [];
+
     setAllSession(allSessions: ISession[]){
         for (const item of allSessions) {
             item.date = new Date(item.date)
@@ -18,6 +23,22 @@ export class CabinetService {
         this._allSessionWasTaken.next(true);
     }
 
+}
+
+export interface Specialization{
+    id: number;
+    type: string;
+}
+
+export const _linksAccess: {[key:string]: any} = {
+    'all-sessions': {
+        roles: [Role.Client],
+        name: 'Всі сеанси',
+    },
+    'settings': {
+       roles: [Role.Client, Role.Psychologist],
+       name: 'Налаштування',
+    }
 }
 
 export class SessionData{
@@ -49,6 +70,7 @@ export class SessionData{
         }
     }
 }
+
 export interface ISession{
     id : number;
     clientPhone: string; 

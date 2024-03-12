@@ -5,22 +5,25 @@ using Newtonsoft.Json.Converters;
 
 namespace backend.Models
 {
-    public enum Role { Client = 1, Psychologist }
+    public enum Role { Client = 1, Partner, Psychologist, Admin }
     public class Account
     {
-        [Key]
-        public int Id { get; set; }
-        [Column("fk_role")]
-        [ForeignKey("account_role_fk")]
-        public Role Role { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
-        public string? Surname { get; set; }
+        [Key] public int Id { get; set; }
+        [Column("roleId")] public Role Role { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Firstname { get; set; } = string.Empty;
+        public string Lastname { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string? RepairCode { get; set; }
         public DateTime CreatedCode { get; set; }
+        public int Bill { get; set; }
+        [MaxLength(6)] public string ReferralCode { get; set; } = string.Empty;
+        public int CountReferralAplied { get; set; }
         public List<NotifySetting> NotifySettings { get; set; } = new();
+
+
+        public PsychologistInfo? PsychologistInfo { get; set; } = null;
     }
 
     public class NotifySetting

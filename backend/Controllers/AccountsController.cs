@@ -6,6 +6,8 @@ using backend.Interfaces;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 
 namespace backend.Controllers
@@ -28,53 +30,58 @@ namespace backend.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateNewAccount([FromBody] AccountCreateDto account)
         {
-            if(await _account.GetAccountByEmail(account.Email) != null) return BadRequest();
+            if (await _account.ExistsByEmail(account.Email)) return BadRequest();
 
             var notifySettings = new List<NotifySetting>
-            {
-                new() { Name = "SessionNotPaid" },
-                new() { Name = "SessionTransfer" },
-                new() { Name = "SessionCancellation" },
-                new() { Name = "TaskReminders" },
-                new() { Name = "OneHoureBefore" },
-            };
+                {
+                    new() { Name = "SessionNotPaid" },
+                    new() { Name = "SessionTransfer" },
+                    new() { Name = "SessionCancellation" },
+                    new() { Name = "TaskReminders" },
+                    new() { Name = "OneHoureBefore" },
+                };
             await _context.Accounts.AddAsync(new Account
             {
-                Name = account.Name,
+                Firstname = account.Name,
                 Email = account.Email,
                 Password = Hasher.HashPassword(account.Password),
                 Role = Role.Client,
                 NotifySettings = notifySettings
             });
-            await _context.SaveChangesAsync();
+
+            var str = await _context.TrySaveChanges();
+            if (str != null) return BadRequest(str);
+
             return Ok();
+        }
+
+        [HttpGet("test")] // must be removed
+        public async Task<IActionResult> Test()
+        {
+            var test = await _account.GetByEmail("p@p.p");
+
+            return Ok(test);
         }
 
         [HttpPost("logIn")]
         public async Task<IActionResult> AuthenticateAccount([FromBody] AccountLogInDto logInData)
         {
-            var account = await _account.GetAccountByEmail(logInData.Email);
-            if(account == null) return NotFound(1);
+            var account = await _account.GetByEmail(logInData.Email);
+            if (account == null) return NotFound(1);
             if (!Hasher.VerifyPassword(logInData.Password, account.Password)) return NotFound(2);
 
             var jwtToken = _jwtService.Generate(account);
-            var accData = new
-            {
-                account.Id,
-                account.Role,
-                account.Email,
-                account.Name,
-                account.Surname,
-                account.NotifySettings,
-                account.Phone
-            };
-            return Ok(new {jwtToken, accData });
+            var accDto = _account.GetDto(account);
+
+            var specializations = _context.Specializations.ToList();
+
+            return Ok(new { jwtToken, accDto, specializations });
         }
 
         [HttpPost("forgetPassword")]
         public async Task<IActionResult> ForgetPassword([FromBody] string email)
         {
-            var account = await _account.GetAccountByEmail(email);
+            var account = await _account.GetByEmail(email, false);
             if (account == null) return NotFound();
 
             if (account.RepairCode != null && (DateTime.Now - account.CreatedCode).TotalMinutes < 2)
@@ -90,14 +97,15 @@ namespace backend.Controllers
             account.RepairCode = code.ToString();
             account.CreatedCode = DateTime.Now;
 
-            await _context.SaveChangesAsync();
+            var str = await _context.TrySaveChanges();
+            if (str != null) return BadRequest(str);
 
             return Ok(code);
         }
         [HttpPost("checkRepairCode")]
         public async Task<IActionResult> CheckRepairCode([FromBody] RepairCodeDto data)
         {
-            var account = await _account.GetAccountByEmail(data.Email);
+            var account = await _account.GetByEmail(data.Email, false);
             if (account == null) return NotFound();
 
             if (account.RepairCode == null)
@@ -110,11 +118,13 @@ namespace backend.Controllers
         [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto data)
         {
-            var account = await _account.GetAccountByEmail(data.Email);
+            var account = await _account.GetByEmail(data.Email, false);
             if (account == null) return NotFound();
 
             account.Password = Hasher.HashPassword(data.NewPassword);
-            await _context.SaveChangesAsync();
+            
+            var str = await _context.TrySaveChanges();
+            if (str != null) return BadRequest(str);
 
             return Ok();
         }
@@ -126,7 +136,7 @@ namespace backend.Controllers
         //    return Ok();
         //}
         //[HttpGet("psyhologist")]
-        //[Authorize(Roles = nameof(Role.Психолог))]
+        //[Authorize(Roles = nameof(Role.Client))]
         //public IActionResult ClickPsyhologist()
         //{
         //    return Ok();
@@ -138,41 +148,43 @@ namespace backend.Controllers
         //    return Ok();
         //}
 
+
+        public record AccountCreateDto
+        {
+            [Required]
+            [MinLength(3)]
+            public string Name { get; set; }
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+            [Required]
+            [MinLength(6)]
+            public string Password { get; set; }
+        }
+        public record AccountLogInDto
+        {
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+            [Required]
+            public string Password { get; set; }
+        }
+        public record RepairCodeDto
+        {
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+            [Required]
+            public string Code { get; set; }
+        }
+        public record ChangePasswordDto
+        {
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+            [Required]
+            public string NewPassword { get; set; }
+        }
     }
-    public record AccountCreateDto
-    {
-        [Required]
-        [MinLength(3)]
-        public string Name { get; set; }
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        [MinLength(6)]
-        public string Password { get; set; }
-    }
-    public record AccountLogInDto
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
-    }
-    public record RepairCodeDto
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public string Code { get; set; }
-    }
-    public record ChangePasswordDto
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public string NewPassword { get; set; }
-    }
+    
 }

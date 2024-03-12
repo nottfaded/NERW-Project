@@ -6,7 +6,8 @@
   height: 100%;
 
   .left-side {
-    z-index: 1;
+    position: relative;
+    overflow: hidden;
     width: get-vh(280px);
     height: 100%;
     box-shadow: get-vh(2px) 0px get-vh(10px) 0px rgba(0, 0, 0, 0.05);
@@ -96,6 +97,7 @@
   }
 
   .right-side {
+    position: relative;
     z-index: 0;
     flex: 1;
     background-color: #fbfbfb;

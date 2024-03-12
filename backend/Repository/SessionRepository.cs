@@ -21,7 +21,7 @@ namespace backend.Repository
             await _contex.SaveChangesAsync();
         }
 
-        public async Task<List<Session>> GetSessionsByAccount(Account account)
+        public async Task<List<Session>> GetByAccount(Account account)
         {
             return account.Role switch
             {
@@ -32,6 +32,24 @@ namespace backend.Repository
 
                 Role.Psychologist => await _contex.Sessions
                     .Where(s => s.PsychoId == account.Id)
+                    .Include(s => s.Client)
+                    .ToListAsync(),
+
+                _ => new List<Session>()
+            };
+        }
+
+        public async Task<List<Session>> GetActive(Account account)
+        {
+            return account.Role switch
+            {
+                Role.Client => await _contex.Sessions
+                    .Where(s => s.ClientId == account.Id && DateTime.Now > s.Date)
+                    .Include(s => s.Psycho)
+                    .ToListAsync(),
+
+                Role.Psychologist => await _contex.Sessions
+                    .Where(s => s.PsychoId == account.Id && DateTime.Now > s.Date)
                     .Include(s => s.Client)
                     .ToListAsync(),
 

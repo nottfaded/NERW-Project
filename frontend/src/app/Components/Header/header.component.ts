@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from "@angular/core";
-import { AccountData } from "../../injectable-services/account.service";
+import { AccountService } from "../../injectable-services/account.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -28,7 +28,7 @@ import { Router } from "@angular/router";
                 <a routerLink="/questions" [class.active-page]="activePage === 'questions'">Про нас</a>
                 <a routerLink="/contacts" [class.active-page]="activePage === 'contacts'">Питання-відповіді</a>
                     @if(account.data){
-                        <button [routerLink]="'/cabinet'"><span>{{ account.data.firstName.slice(0, 9) }}{{ account.data.firstName.length > 9 ? '...' : '' }}</span></button>
+                        <button [routerLink]="'/cabinet'"><span>{{ account.data.firstname.slice(0, 9) }}{{ account.data.firstname.length > 9 ? '...' : '' }}</span></button>
                     } @else {
                         <button (click)="navigateToAuthorization()"><span>Увійти</span></button>
                     }
@@ -43,7 +43,7 @@ export class HeaderComponent {
     @Input() activePage: string = '';
     backgroundColor: string = 'white';
 
-    constructor(private router: Router, protected account: AccountData) { }
+    constructor(private router: Router, protected account: AccountService) { }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['activePage']) {

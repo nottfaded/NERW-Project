@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountData, Role } from '../../injectable-services/account.service';
-import { SettingComponent } from './settings/setting.component';
-import { Router } from '@angular/router';
-import { AllSessionsComponent } from './all-sessions/all-sessions.component';
+import { AccountService, Role } from '../../injectable-services/account.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { CabinetService, ISession, SessionData, } from '../../injectable-services/cabinet.service';
-import { API_URL } from '../../../main';
+import { CabinetService, _linksAccess, } from '../../injectable-services/cabinet.service';
 
 @Component({
     selector: 'cabinet',
@@ -16,26 +13,19 @@ import { API_URL } from '../../../main';
                 <div class="role-name">{{getNameRole()}}</div>
                 <div class="container-buttons">
                     @for (item of pages; track $index) {
-                        @if (item.roles.includes(account.role)) {
-                            <div class="btn-page-container">
-                                <div class="btn-page" [ngClass]="{
-                                    'notify': item.notify,
-                                    'active': activePage == $index
-                                }"
-                                (click)="activePage = $index"
-                                >
-                                    <img [src]="'assets/img/cabinet/page-icons/' + item.img + '.svg'" alt="all-sessions">
-                                    <span>{{item.name}}</span>
-                                </div>
-                            </div>
-                        }
+                        <div class="btn-page-container">
+                            <a class="btn-page" [class.notify]="item.notify" [routerLink]="item.mainName" [routerLinkActive]="'active'">
+                                <img [src]="'assets/img/cabinet/page-icons/' + item.mainName + '.svg'" alt="all-sessions">
+                                <span>{{item.name}}</span>
+                            </a>
+                        </div>
                     }
                 </div>
                 <div class="footer-container">
                     <div class="name-account">
-                        {{account.data?.firstName}}
+                        {{accService.data?.firstname}}
                         <br>
-                        {{account.data?.lastName}}
+                        {{accService.data?.lastname}}
                     </div>
                     <div class="logout" (click)="logout()">
                         <img src="assets/img/cabinet/page-icons/logout.svg" alt="">
@@ -43,7 +33,7 @@ import { API_URL } from '../../../main';
                 </div>
             </div>
             <div class="right-side">
-                <div [ngComponentOutlet]="pages[activePage].component"></div>
+                <router-outlet />
             </div>
         </div>
     `,
@@ -51,22 +41,17 @@ import { API_URL } from '../../../main';
 })
 export class CabinetComponent implements OnInit {
     constructor(
-        protected account : AccountData,  private router: Router, private http: HttpClient, private cabinetService: CabinetService 
-    ) { }
+        protected accService : AccountService,  private router: Router, private http: HttpClient, private cabinetService: CabinetService) { }
 
-    activePage = 0;
-    pages = [
-        {name: 'Всі сеанси', img: "all-sessions", roles: [Role.Clien, Role.Psychologist], component: AllSessionsComponent, notify: false},
-        {name: 'Налаштування', img: "settings", roles: [Role.Clien, Role.Psychologist], component: SettingComponent, notify: false},
-    ]
+    pages: any[] = []
 
     logout(){
         this.router.navigate(['auth'], {queryParams: { type: "authorization" }})
-        this.account.logOut();
+        this.accService.logOut();
     }
 
     ngOnInit(): void {
-        if(!this.account.data) return;
+        if(!this.accService.data) return;
 
         // this.http.get<ISession[]>(API_URL + `sessions/getSessions/${this.account.data.id}`)
         // .subscribe(
@@ -91,11 +76,22 @@ export class CabinetComponent implements OnInit {
                 surname: 'Невмирич'
             }
         }])
+
+        for (const key in _linksAccess) {
+            if(_linksAccess[key].roles.includes(this.accService.role)){
+                this.pages.push({
+                    name: _linksAccess[key].name,
+                    mainName: key,
+                    notify: false
+                })
+            }
+        }
+        if(this.pages.length > 0) this.router.navigateByUrl('cabinet/' + this.pages[0].mainName);
     }
 
     getNameRole(){
-        switch(this.account.role){
-            case Role.Clien: return "Клієнт";
+        switch(this.accService.role){
+            case Role.Client: return "Клієнт";
             case Role.Psychologist: return "Фахівець"
             default: return null;
         }

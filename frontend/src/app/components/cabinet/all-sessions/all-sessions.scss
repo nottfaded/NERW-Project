@@ -186,6 +186,7 @@ $right-w-size-block: get-vh(300px);
             height: get-vh(150px);
             margin-top: get-vh(35px);
             border-radius: get-vh(10px);
+            box-shadow: 0px 0px get-vh(5px) 0px rgba(0, 0, 0, 0.15);
 
             & > .client-info{
                 position: absolute;

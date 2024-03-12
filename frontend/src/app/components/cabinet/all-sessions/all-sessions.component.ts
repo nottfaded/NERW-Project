@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CabinetService, SessionData } from '../../../injectable-services/cabinet.service';
-import { AccountData } from '../../../injectable-services/account.service';
+import { AccountService, Role } from '../../../injectable-services/account.service';
+import { Router } from '@angular/router';
 
 interface LastClient{
     fullName: string;
@@ -94,7 +95,7 @@ interface LastClient{
                             <button>Відкрити профіль</button>
                         </div>
                     </div>
-                } @else {
+                } @else if(account.role === 3) {
                     <div class="title">Останні клієнти</div>
                     @for (item of arrayLastClients; track $index) {
                         <div class="block-client">
@@ -125,7 +126,7 @@ interface LastClient{
 })
 
 export class AllSessionsComponent implements OnInit, OnDestroy {
-    constructor(protected cabService: CabinetService, protected account: AccountData) { }
+    constructor(protected cabService: CabinetService, protected account: AccountService, private router: Router) { }
     
     ngOnDestroy(): void {
         clearInterval(this.intervalForSessionsTime);
@@ -141,7 +142,7 @@ export class AllSessionsComponent implements OnInit, OnDestroy {
             // }, 1000);
         })
 
-        if(this.account.role == 2){
+        if(this.account.role == Role.Psychologist){
             let arr = this.cabService.allSessions.slice(0, 4);
             for (const session of arr) {
                 this.arrayLastClients.push({
@@ -156,7 +157,7 @@ export class AllSessionsComponent implements OnInit, OnDestroy {
 
     intervalForSessionsTime: any = null;
 
-    selectSort : string[] = ['Без сортування', 'Сортування'];
+    selectSort : string[] = ['Без сортування'/*, 'Сортування'*/];
     activeSelectSort : number = 1;
 
     filterSession: SessionData[] = [];

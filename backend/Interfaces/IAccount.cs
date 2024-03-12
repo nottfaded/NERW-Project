@@ -1,10 +1,14 @@
-﻿using backend.Models;
+﻿using backend.GlobalDto;
+using backend.Models;
 
 namespace backend.Interfaces
 {
     public interface IAccount
     {
-        public Task<Account?> GetAccountByEmail(string email);
-        public Task<Account?> GetAccountById(int id);
+        public Task<bool> ExistsByEmail(string email);
+        public Task<Account?> GetByEmail(string email, bool psychInfo = true);
+        public Task<Account?> GetById(int id, bool psychInfo = true);
+
+        public AccountDto GetDto(Account account);
     }
 }
